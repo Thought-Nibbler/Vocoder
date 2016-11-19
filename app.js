@@ -1,14 +1,26 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
+var express      = require('express');
+var electron     = require("electron");
+var path         = require('path');
+var favicon      = require('serve-favicon');
+var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var bodyParser   = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+app.use(express.static("public"));
+app.listen(3000, "127.0.0.1");
+
+// electron setting
+electron.app.on("ready", function () {
+  var main = new electron.BrowserWindow({width: 800, height: 600});
+  main.on("closed", electron.app.quit);
+  main.webContents.openDevTools();
+  main.loadURL("http://127.0.0.1:3000/");
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
