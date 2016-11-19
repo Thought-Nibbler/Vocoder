@@ -1,36 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script>
-     // グローバル名前空間オブジェクト
-     var VOCODER = {};
-     // プロセス間通信用オブジェクト
-     VOCODER.ipc = require('electron');
-    </script>
-    <script>
-     // for electron
-     if ((typeof module) !== 'undefined') {
-         VOCODER.__temp__ = module.exports;
-         module.exports   = false;
-     }
-    </script>
-    <script type="text/javascript" src="/javascripts/lib/jquery-3.1.0.min.js"></script>
-    <script type="text/javascript" src="/javascripts/lib/d3.v3.min.js"></script>
-    <script>
-     // for electron
-     if (VOCODER.__temp__) {
-         module.exports   = VOCODER.__temp__;
-         VOCODER.__temp__ = null;
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <script>
+         // グローバル名前空間オブジェクト
+         var VOCODER      = {};
+         // Web Audio APIコンテキスト
+         VOCODER.audioCtx = new AudioContext();
+         // プロセス間通信用オブジェクト
+         VOCODER.ipc      = require('electron');
+         // メインプロセス側APIを利用するためのラッパー
+         VOCODER.remote   = require('electron').remote;
+         // ローカルファイルを扱うモジュール
+         VOCODER.fs       = require('fs');
+         // dialog モジュール
+         VOCODER.dialog   = VOCODER.remote.dialog;
+        </script>
+        <script>
+         // for electron
+         if ((typeof module) !== 'undefined') {
+             VOCODER.__temp__ = module.exports;
+             module.exports   = false;
+         }
+        </script>
+        <script type="text/javascript" src="/javascripts/lib/jquery-3.1.0.min.js"></script>
+        <script type="text/javascript" src="/javascripts/lib/d3.v3.min.js"></script>
+        <script>
+         // for electron
+         if (VOCODER.__temp__) {
+             module.exports   = VOCODER.__temp__;
+             VOCODER.__temp__ = null;
 
-         delete VOCODER.__temp__;
-     }
-    </script>
-    <script type="text/javascript" src="/javascripts/main.js"></script>
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+             delete VOCODER.__temp__;
+         }
+        </script>
+        <script type="text/javascript" src="/javascripts/Util.js"></script>
+        <script type="text/javascript" src="/javascripts/Modulator.js"></script>
+        <script type="text/javascript" src="/javascripts/Carrier.js"></script>
+        <script type="text/javascript" src="/javascripts/main.js"></script>
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <p>Welcome to <%= title %></p>
+    </body>
 </html>
