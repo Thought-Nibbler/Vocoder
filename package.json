@@ -1,38 +1,35 @@
 {
-    "name": "vocoder",
-    "version": "1.0.0",
-    "private": true,
-    "scripts": {
-        "start": "node ./bin/www"
-    },
-    "description": "vocoder",
-    "main": "app.js",
-    "dependencies": {
-        "body-parser": "~1.15.2",
-        "cookie-parser": "~1.4.3",
-        "debug": "~2.2.0",
-        "ejs": "~2.5.2",
-        "express": "~4.14.0",
-        "morgan": "~1.7.0",
-        "serve-favicon": "~2.3.0"
-    },
-    "devDependencies": {},
-    "scripts": {
-        "start": "node ./bin/www"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Thought-Nibbler/Vocoder.git"
-    },
-    "keywords": [
-        "electron",
-        "express",
-        "vocoder"
-    ],
-    "author": "Thought_Nibbler",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/Thought-Nibbler/Vocoder/issues"
-    },
-    "homepage": "https://github.com/Thought-Nibbler/Vocoder#readme"
+  "name": "vocoder",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "description": "vocoder",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "~1.15.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.5.2",
+    "express": "~4.14.0",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thought-Nibbler/Vocoder.git"
+  },
+  "keywords": [
+    "electron",
+    "express",
+    "vocoder"
+  ],
+  "author": "Thought_Nibbler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Thought-Nibbler/Vocoder/issues"
+  },
+  "homepage": "https://github.com/Thought-Nibbler/Vocoder#readme"
 }

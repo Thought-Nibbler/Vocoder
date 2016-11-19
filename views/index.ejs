@@ -3,6 +3,31 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script>
+     // グローバル名前空間オブジェクト
+     var VOCODER = {};
+     // プロセス間通信用オブジェクト
+     VOCODER.ipc = require('electron');
+    </script>
+    <script>
+     // for electron
+     if ((typeof module) !== 'undefined') {
+         VOCODER.__temp__ = module.exports;
+         module.exports   = false;
+     }
+    </script>
+    <script type="text/javascript" src="/javascripts/lib/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="/javascripts/lib/d3.v3.min.js"></script>
+    <script>
+     // for electron
+     if (VOCODER.__temp__) {
+         module.exports   = VOCODER.__temp__;
+         VOCODER.__temp__ = null;
+
+         delete VOCODER.__temp__;
+     }
+    </script>
+    <script type="text/javascript" src="/javascripts/main.js"></script>
   </head>
   <body>
     <h1><%= title %></h1>
