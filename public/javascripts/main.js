@@ -1,27 +1,20 @@
 $(function() {
     console.info('Start "Vocoder".');
 
-    var Modulator = new VOCODER.Modulator();
-    var Carrier   = new VOCODER.Carrier();
+    var reloadFunc = function() {
+        // モジュレータ音色の倍音構成を取得する
+        var overtone = Modulator.GetOvertone();
 
-    // ウィンドウの内部要素の更新（ウィンドウリサイズ時・可視状態の変更時）
-    var RefreshWindow = function() {
+        Carrier.reloadWave(overtone);
     };
 
-    // ウィンドウサイズへのフィット処理
-    (function() {
-        $(window).on('resize', RefreshWindow);
-    }());
+    var OnModulatorReady = function() {
+        reloadFunc();
+        window.requestAnimationFrame(OnModulatorReady);
+    };
 
-    (function() {
-        /*
-        var oscillator = VOCODER.audioCtx.createOscillator();
-
-        oscillator.connect(VOCODER.audioCtx.destination);
-
-        oscillator.start();
-        */
-    }());
+    var Modulator = new VOCODER.Modulator(OnModulatorReady);
+    var Carrier   = new VOCODER.Carrier();
 
     $('h1').on('click', function() {
         // ファイル選択ダイアログを開き、音声ファイルを選択する
@@ -34,7 +27,5 @@ $(function() {
         // 音声ファイル内容をモジュレータとして読み込む
         Modulator.LoadSoundFile(soundFileName);
     });
-
-    RefreshWindow();
 });
 
