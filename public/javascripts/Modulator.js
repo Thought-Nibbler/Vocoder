@@ -21,7 +21,7 @@ VOCODER.Modulator = function(onReady) {
         me.src.loop               = false;
         me.src.loopStart          = 0;
         me.src.loopEnd            = audioBuffer.duration;
-        me.src.playbackRate.value = 0.75;
+        me.src.playbackRate.value = 1;
 
         // ノードの接続
         // [src] -> [analyserNode] -> [(dst)]
@@ -48,7 +48,7 @@ VOCODER.Modulator = function(onReady) {
         this.spectrumData.forEach(function(db, idx) {
             var nowFreq  = (sampleRate * idx) / fftSize;
 
-            if (nowFreq < 440 && baseFreqDb < db) {
+            if ((0 < nowFreq && nowFreq < 300) && baseFreqDb < db) {
                 baseFreqDb = db;
                 baseFreq   = nowFreq;
             }
@@ -68,7 +68,7 @@ VOCODER.Modulator = function(onReady) {
             }
         });
 
-        return overtone;
+        return { f : baseFreq, overtone : overtone };
     };
 
     ////////////////////////////////////////////////////////////

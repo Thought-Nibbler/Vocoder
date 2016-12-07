@@ -7,7 +7,12 @@ VOCODER.Carrier = function() {
 
     // 音源ノード
     // （ここではカスタム波形オシレーターを用いている）
-    this.oscillator = VOCODER.audioCtx.createOscillator();
+    this.oscillator   = VOCODER.audioCtx.createOscillator();
+    this.analyserNode = VOCODER.audioCtx.createAnalyser();
+    this.dst          = VOCODER.audioCtx.destination;
+
+    // Analyserノードの内部データ（周波数スペクトル）
+    this.spectrumData = new Float32Array(this.analyserNode.frequencyBinCount);
 
     // オシレーター波形の初期設定
     (function() {
@@ -26,13 +31,15 @@ VOCODER.Carrier = function() {
     }());
 
     // ノードの接続（出力用）
-    this.oscillator.connect(VOCODER.audioCtx.destination);
+    this.oscillator.connect(this.analyserNode);
+    this.analyserNode.connect(this.dst);
 
     // 音源の再生開始（この後常に再生だが、初期状態では無音）
     this.oscillator.start();
 
     // 合成波形を更新する
-    this.reloadWave = function (data) {
+    this.reloadWave = function (obj) {
+        var data = obj.overtone;
         var real = new Float32Array(data.length + 1);
         var imag = new Float32Array(data.length + 1);
 
@@ -42,11 +49,8 @@ VOCODER.Carrier = function() {
         imag[0] = 0.0;
 
         for (var i = 0; i < 10; i++) {
-            real[i + 1] = 0.0;
+            real[i + 1] = data[i];
             imag[i + 1] = data[i];
-
-            //real[i + 1] = data[i];
-            //imag[i + 1] = 0.0;
 
             if (data[i] > 0.01) {
                 isMute = false;
@@ -63,7 +67,6 @@ VOCODER.Carrier = function() {
 
         var waveTable = VOCODER.audioCtx.createPeriodicWave(real, imag);
         this.oscillator.setPeriodicWave(waveTable);
-
-        //console.log('reloadWave(' + VOCODER.audioCtx.currentTime + ')');
+        this.oscillator.frequency.value = obj.f;
     };
 };
